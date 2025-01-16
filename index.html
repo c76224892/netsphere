@@ -1,470 +1,460 @@
 <!DOCTYPE html> 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Network AI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Reset and Basic Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #0d0d0d;
-            color: #00ffff;
-            font-family: 'Courier New', Courier, monospace;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            animation: fadeInBody 1s ease-out forwards;
-        }
-
-        @keyframes fadeInBody {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Container Styles */
-        .container, .company-list, .company-details {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            width: 90%;
-            max-width: 1200px;
-            overflow-y: auto;
-            height: 90vh;
-            background-color: rgba(13, 13, 13, 0.95);
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            animation: fadeInContainer 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeInContainer {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Main Container (Visible on Load) */
-        #mainContainer {
-            display: flex;
-        }
-
-        /* Headings */
-        h1, h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 5px #00ffff;
-            animation: slideDown 0.6s ease-out forwards;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .description {
-            max-width: 600px;
-            margin-bottom: 30px;
-            font-size: 1.2em;
-            line-height: 1.5;
-            text-align: center;
-            text-shadow: 0 0 3px #00ffff;
-            animation: fadeInText 1s ease-out forwards;
-        }
-
-        @keyframes fadeInText {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .continent-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            animation: staggerButtons 1s ease-out forwards;
-        }
-
-        @keyframes staggerButtons {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .button {
-            background-color: #1a1a1a;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 15px 30px;
-            cursor: pointer;
-            font-size: 1.2em;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s, transform 0.2s;
-            min-width: 150px;
-            text-align: center;
-        }
-
-        .company-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
-            padding: 10px;
-            overflow-y: auto;
-            max-height: 70vh;
-            animation: fadeInGrid 1s ease-out forwards;
-        }
-
-        @keyframes fadeInGrid {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .company-card {
-            background-color: #1a1a1a;
-            border: 2px solid #00ffff;
-            border-radius: 10px;
-            padding: 20px;
-            cursor: pointer;
-            color: #00ffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInCard 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeInCard {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .company-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 255, 255, 0.5);
-        }
-
-        .company-card h3 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
-            text-shadow: 0 0 3px #00ffff;
-        }
-
-        .company-card p {
-            font-size: 1em;
-            margin-bottom: 10px;
-        }
-
-        /* Details Table */
-        table {
-            width: 100%;
-            max-width: 600px;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #00ffff;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #1a1a1a;
-        }
-
-        /* Back Button */
-        .back-button {
-            margin-top: 30px;
-            background-color: #1a1a1a;
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 1em;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .company-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-        }
-
-        @media (max-width: 600px) {
-            h1, h2 {
-                font-size: 2em;
-            }
-
-            .button, .back-button {
-                padding: 10px 20px;
-                font-size: 1em;
-                min-width: 120px;
-            }
-
-            .company-card {
-                padding: 15px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Network AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* Reset and Basic Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0d0d0d;
+      color: #00ffff;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: fadeInBody 1s ease-out forwards;
+    }
+    @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
+    .container, .company-list, .company-details {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      width: 90%;
+      max-width: 1200px;
+      overflow-y: auto;
+      height: 90vh;
+      background-color: rgba(13, 13, 13, 0.95);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      animation: fadeInContainer 0.8s ease-out forwards;
+    }
+    @keyframes fadeInContainer {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    #mainContainer { display: flex; }
+    h1, h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px #00ffff;
+      animation: slideDown 0.6s ease-out forwards;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .description {
+      max-width: 600px;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      line-height: 1.5;
+      text-align: center;
+      text-shadow: 0 0 3px #00ffff;
+      animation: fadeInText 1s ease-out forwards;
+    }
+    @keyframes fadeInText { from { opacity: 0; } to { opacity: 1; } }
+    .continent-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      animation: staggerButtons 1s ease-out forwards;
+    }
+    @keyframes staggerButtons {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .button {
+      background-color: #1a1a1a;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      padding: 15px 30px;
+      cursor: pointer;
+      font-size: 1.2em;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      min-width: 150px;
+      text-align: center;
+    }
+    .company-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      padding: 10px;
+      overflow-y: auto;
+      max-height: 70vh;
+      animation: fadeInGrid 1s ease-out forwards;
+    }
+    @keyframes fadeInGrid { from { opacity: 0; } to { opacity: 1; } }
+    .company-card {
+      background-color: #1a1a1a;
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      color: #00ffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: fadeInCard 0.5s ease-out forwards;
+    }
+    @keyframes fadeInCard { to { opacity: 1; transform: translateY(0); } }
+    .company-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 16px rgba(0, 255, 255, 0.5);
+    }
+    .company-card h3 { margin-bottom: 10px; font-size: 1.5em; text-shadow: 0 0 3px #00ffff; }
+    .company-card p { font-size: 1em; margin-bottom: 10px; }
+    table { width: 100%; max-width: 600px; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #00ffff; padding: 10px; text-align: left; }
+    th { background-color: #1a1a1a; }
+    .back-button {
+      margin-top: 30px;
+      background-color: #1a1a1a;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 1em;
+      border-radius: 5px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .company-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      h1, h2 { font-size: 2em; }
+      .button, .back-button { padding: 10px 20px; font-size: 1em; min-width: 120px; }
+      .company-card { padding: 15px; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Main Container -->
-    <div class="container" id="mainContainer">
-        <h1>Network AI</h1>
-        <p class="description">
-            Welcome to Network AI! Explore AI-powered companies and their leadership teams. Click to discover!
-        </p>
-
-        <!-- Continent Selection -->
-        <div class="continent-buttons">
-            <button class="button" onclick="showCompanies('USA')">USA</button>
-            <button class="button" onclick="showCompanies('Europe')">Europe</button>
-            <button class="button" onclick="showCompanies('Asia')">Asia</button>
-            <button class="button" onclick="showCompanies('Africa')">Africa</button>
-            <button class="button" onclick="showCompanies('SouthAmerica')">South America</button>
-        </div>
+  <!-- Main Container -->
+  <div class="container" id="mainContainer">
+    <h1>Network AI</h1>
+    <p class="description">
+      Discover a comprehensive network of AI-powered companies worldwide. Explore detailed profiles, leadership teams, and board information across various continents. Click on a continent to access and learn more about companies and their executives.
+    </p>
+    <!-- Continent Selection -->
+    <div class="continent-buttons">
+      <button class="button" onclick="showCompanies('USA')">USA</button>
+      <button class="button" onclick="showCompanies('Europe')">Europe</button>
+      <button class="button" onclick="showCompanies('Asia')">Asia</button>
+      <button class="button" onclick="showCompanies('Africa')">Africa</button>
+      <button class="button" onclick="showCompanies('SouthAmerica')">South America</button>
     </div>
+  </div>
 
-    <!-- Company List Container -->
-    <div class="company-list" id="companyList">
-        <h2>Companies in <span id="selectedContinent"></span></h2>
-        <div class="company-grid" id="companiesGrid">
-            <!-- Company Cards will be dynamically added here -->
-        </div>
-        <button class="back-button" onclick="goBack()">Back to Continents</button>
-    </div>
+  <!-- Company List Container -->
+  <div class="company-list" id="companyList">
+    <h2>Companies in <span id="selectedContinent"></span></h2>
+    <div class="company-grid" id="companiesGrid"></div>
+    <button class="back-button" onclick="goBack()">Back to Continents</button>
+  </div>
 
-    <!-- Company Details Container -->
-    <div class="company-details" id="companyDetails">
-        <h2 id="companyName">Company Name</h2>
-        <h3>Executive Team</h3>
-        <table>
-            <tr>
-                <th>Role</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-            </tr>
-            <tr>
-                <td>CEO</td>
-                <td id="ceoName">Name</td>
-                <td id="ceoEmail"><a href="mailto:email@example.com">email@example.com</a></td>
-                <td id="ceoPhone">+1-234-567-890</td>
-            </tr>
-            <tr>
-                <td>VP</td>
-                <td id="vpName">VP Name</td>
-                <td id="vpEmail"><a href="mailto:vp@example.com">vp@example.com</a></td>
-                <td id="vpPhone">+1-987-654-3210</td>
-            </tr>
-        </table>
-        <h3>Board of Directors</h3>
-        <table id="bodTable">
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-            </tr>
-            <!-- BoD details will be inserted here -->
-        </table>
-        <h3>Management Team</h3>
-        <table id="managementTable">
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Email</th>
-                <th>Phone</th>
-            </tr>
-            <!-- Management details will be inserted here -->
-        </table>
-        <button class="back-button" onclick="goBackToCompanies()">Back to Companies</button>
-    </div>
+  <!-- Company Details Container -->
+  <div class="company-details" id="companyDetails">
+    <h2 id="companyName">Company Name</h2>
+    <h3>Executive Team</h3>
+    <table>
+      <tr>
+        <th>Role</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+      <tr>
+        <td>CEO</td>
+        <td id="ceoName">Name</td>
+        <td id="ceoEmail"><a href="mailto:email@example.com">email@example.com</a></td>
+        <td id="ceoPhone">+1-234-567-890</td>
+      </tr>
+      <tr>
+        <td>VP</td>
+        <td id="vpName">VP Name</td>
+        <td id="vpEmail"><a href="mailto:vp@example.com">vp@example.com</a></td>
+        <td id="vpPhone">+1-987-654-3210</td>
+      </tr>
+    </table>
+    <h3>Board of Directors</h3>
+    <table id="bodTable">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+    </table>
+    <h3>Management Team</h3>
+    <table id="managementTable">
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+    </table>
+    <button class="back-button" onclick="goBackToCompanies()">Back to Companies</button>
+  </div>
 
-    <script>
-        // Sample Data for Each Continent with Expanded Company Details
-        const data = {
-            USA: [
-                { 
-                    name: 'Apple Inc.', 
-                    description: 'Technology', 
-                    ceo: { name: 'Tim Cook', email: 'tim.cook@apple.com', phone: '+1-408-996-1010' },
-                    vp: { name: 'John Smith', email: 'john.smith@apple.com', phone: '+1-408-996-2020' },
-                    board: [
-                        { name: 'Alice King', email: 'alice.king@apple.com', phone: '+1-408-996-3030' },
-                        { name: 'Bob Stone', email: 'bob.stone@apple.com', phone: '+1-408-996-4040' }
-                    ],
-                    management: [
-                        { name: 'Carol White', position: 'CFO', email: 'carol.white@apple.com', phone: '+1-408-996-5050' },
-                        { name: 'Dave Black', position: 'COO', email: 'dave.black@apple.com', phone: '+1-408-996-6060' }
-                    ]
-                },
-                // ... More USA companies following this structure
-            ],
-            Europe: [
-                { 
-                    name: 'Volkswagen Group', 
-                    description: 'Automobiles', 
-                    ceo: { name: 'Oliver Blume', email: 'oliver.blume@volkswagen.de', phone: '+49-5361-9000' },
-                    vp: { name: 'Franz Müller', email: 'franz.mueller@volkswagen.de', phone: '+49-5361-9001' },
-                    board: [
-                        { name: 'Eva Schmidt', email: 'eva.schmidt@vw.com', phone: '+49-5361-9002' },
-                        { name: 'Hans Keller', email: 'hans.keller@vw.com', phone: '+49-5361-9003' }
-                    ],
-                    management: [
-                        { name: 'Lena Braun', position: 'CFO', email: 'lena.braun@vw.com', phone: '+49-5361-9004' },
-                        { name: 'Markus Neumann', position: 'CTO', email: 'markus.neumann@vw.com', phone: '+49-5361-9005' }
-                    ]
-                },
-                // ... More Europe companies
-            ],
-            Asia: [
-                { 
-                    name: 'Samsung', 
-                    description: 'Electronics', 
-                    ceo: { name: 'Kim Hyun Suk', email: 'kim.hyun@samsung.com', phone: '+82-2-2255-0114' },
-                    vp: { name: 'Lee Min Ho', email: 'lee.min@samsung.com', phone: '+82-2-2255-0115' },
-                    board: [
-                        { name: 'Park Ji Soo', email: 'park.jisoo@samsung.com', phone: '+82-2-2255-0116' },
-                        { name: 'Choi Min Jung', email: 'choi.minjung@samsung.com', phone: '+82-2-2255-0117' }
-                    ],
-                    management: [
-                        { name: 'Kim Soo Hyun', position: 'CFO', email: 'kim.soohy@samsung.com', phone: '+82-2-2255-0118' },
-                        { name: 'Lee Young Ae', position: 'COO', email: 'lee.youngae@samsung.com', phone: '+82-2-2255-0119' }
-                    ]
-                },
-                // ... More Asia companies
-            ],
-            Africa: [
-                { 
-                    name: 'MTN Group', 
-                    description: 'Telecommunications', 
-                    ceo: { name: 'Radhakrishnan Nair', email: 'radhakrishnan.nair@mtn.com', phone: '+27-11-123-4567' },
-                    vp: { name: 'Ngozi Okonjo', email: 'ngozi.okonjo@mtn.com', phone: '+27-11-123-4568' },
-                    board: [
-                        { name: 'Sipho Dlamini', email: 'sipho.dlamini@mtn.com', phone: '+27-11-123-4569' },
-                        { name: 'Amina Yusuf', email: 'amina.yusuf@mtn.com', phone: '+27-11-123-4570' }
-                    ],
-                    management: [
-                        { name: 'Thabo Mbeki', position: 'CFO', email: 'thabo.mbeki@mtn.com', phone: '+27-11-123-4571' },
-                        { name: 'Zanele Khumalo', position: 'COO', email: 'zanele.khumalo@mtn.com', phone: '+27-11-123-4572' }
-                    ]
-                },
-                // ... More Africa companies
-            ],
-            SouthAmerica: [
-                { 
-                    name: 'Petrobras', 
-                    description: 'Oil & Gas', 
-                    ceo: { name: 'Roberto Castello Branco', email: 'roberto.castello@petrobras.com', phone: '+55-21-2540-8000' },
-                    vp: { name: 'Maria Silva', email: 'maria.silva@petrobras.com', phone: '+55-21-2540-8001' },
-                    board: [
-                        { name: 'Carlos Mendes', email: 'carlos.mendes@petrobras.com', phone: '+55-21-2540-8002' },
-                        { name: 'Ana Costa', email: 'ana.costa@petrobras.com', phone: '+55-21-2540-8003' }
-                    ],
-                    management: [
-                        { name: 'João Souza', position: 'CFO', email: 'joao.souza@petrobras.com', phone: '+55-21-2540-8004' },
-                        { name: 'Paula Lima', position: 'COO', email: 'paula.lima@petrobras.com', phone: '+55-21-2540-8005' }
-                    ]
-                },
-                // ... More South America companies
-            ]
-        };
-
-        function showCompanies(continent) {
-            const companyList = document.getElementById('companyList');
-            const companiesGrid = document.getElementById('companiesGrid');
-            const selectedContinent = document.getElementById('selectedContinent');
-
-            selectedContinent.textContent = continent;
-            companiesGrid.innerHTML = ''; // Clear previous companies
-
-            if (data[continent]) {
-                data[continent].forEach(company => {
-                    const card = document.createElement('div');
-                    card.className = 'company-card';
-                    card.onclick = () => showDetails(company);
-                    card.innerHTML = `
-                        <h3>${company.name}</h3>
-                        <p><strong>Description:</strong> ${company.description}</p>
-                    `;
-                    companiesGrid.appendChild(card);
-                });
-            } else {
-                companiesGrid.innerHTML = '<p>No companies found for this continent.</p>';
-            }
-
-            document.getElementById('mainContainer').style.display = 'none';
-            companyList.style.display = 'flex';
+  <script>
+    const data = {
+      USA: [
+        { 
+          name: 'Apple Inc.', description: 'Technology', 
+          ceo: { name: 'Tim Cook', email: 'tim.cook@apple.com', phone: '+1-408-996-1010' },
+          vp: { name: 'John Smith', email: 'john.smith@apple.com', phone: '+1-408-996-2020' },
+          board: [
+            { name: 'Alice King', email: 'alice.king@apple.com', phone: '+1-408-996-3030' },
+            { name: 'Bob Stone', email: 'bob.stone@apple.com', phone: '+1-408-996-4040' }
+          ],
+          management: [
+            { name: 'Carol White', position: 'CFO', email: 'carol.white@apple.com', phone: '+1-408-996-5050' },
+            { name: 'Dave Black', position: 'COO', email: 'dave.black@apple.com', phone: '+1-408-996-6060' }
+          ]
+        },
+        { 
+          name: 'Microsoft', description: 'Software & Cloud', 
+          ceo: { name: 'Satya Nadella', email: 'satya.nadella@microsoft.com', phone: '+1-425-882-8080' },
+          vp: { name: 'Jane Doe', email: 'jane.doe@microsoft.com', phone: '+1-425-882-9090' },
+          board: [
+            { name: 'Richard Roe', email: 'richard.roe@microsoft.com', phone: '+1-425-882-7070' },
+            { name: 'Emily Clark', email: 'emily.clark@microsoft.com', phone: '+1-425-882-6060' }
+          ],
+          management: [
+            { name: 'George Hall', position: 'CFO', email: 'george.hall@microsoft.com', phone: '+1-425-882-5050' },
+            { name: 'Linda King', position: 'CTO', email: 'linda.king@microsoft.com', phone: '+1-425-882-4040' }
+          ]
+        },
+        // Adding 7 more fictional USA companies
+        { 
+          name: 'Google LLC', description: 'Search & AI', 
+          ceo: { name: 'Sundar Pichai', email: 'sundar.pichai@google.com', phone: '+1-650-253-0000' },
+          vp: { name: 'Alice Johnson', email: 'alice.johnson@google.com', phone: '+1-650-253-0001' },
+          board: [
+            { name: 'Michael Brown', email: 'michael.brown@google.com', phone: '+1-650-253-0002' },
+            { name: 'Rachel Adams', email: 'rachel.adams@google.com', phone: '+1-650-253-0003' }
+          ],
+          management: [
+            { name: 'Tom Lee', position: 'CFO', email: 'tom.lee@google.com', phone: '+1-650-253-0004' },
+            { name: 'Sara White', position: 'COO', email: 'sara.white@google.com', phone: '+1-650-253-0005' }
+          ]
+        },
+        { 
+          name: 'Amazon', description: 'E-commerce & Cloud', 
+          ceo: { name: 'Andy Jassy', email: 'andy.jassy@amazon.com', phone: '+1-206-266-1000' },
+          vp: { name: 'Bob Brown', email: 'bob.brown@amazon.com', phone: '+1-206-266-1001' },
+          board: [
+            { name: 'Linda Green', email: 'linda.green@amazon.com', phone: '+1-206-266-1002' },
+            { name: 'James White', email: 'james.white@amazon.com', phone: '+1-206-266-1003' }
+          ],
+          management: [
+            { name: 'Karen Black', position: 'CFO', email: 'karen.black@amazon.com', phone: '+1-206-266-1004' },
+            { name: 'Steve Young', position: 'CTO', email: 'steve.young@amazon.com', phone: '+1-206-266-1005' }
+          ]
+        },
+        { 
+          name: 'Facebook', description: 'Social Media', 
+          ceo: { name: 'Mark Zuckerberg', email: 'mark.zuckerberg@fb.com', phone: '+1-650-543-4800' },
+          vp: { name: 'Carol White', email: 'carol.white@fb.com', phone: '+1-650-543-4801' },
+          board: [
+            { name: 'Peter Parker', email: 'peter.parker@fb.com', phone: '+1-650-543-4802' },
+            { name: 'Bruce Wayne', email: 'bruce.wayne@fb.com', phone: '+1-650-543-4803' }
+          ],
+          management: [
+            { name: 'Diana Prince', position: 'CFO', email: 'diana.prince@fb.com', phone: '+1-650-543-4804' },
+            { name: 'Clark Kent', position: 'COO', email: 'clark.kent@fb.com', phone: '+1-650-543-4805' }
+          ]
+        },
+        { 
+          name: 'Tesla', description: 'Automotive & Energy', 
+          ceo: { name: 'Elon Musk', email: 'elon.musk@tesla.com', phone: '+1-650-681-5000' },
+          vp: { name: 'David Green', email: 'david.green@tesla.com', phone: '+1-650-681-5001' },
+          board: [
+            { name: 'Steve Jobs', email: 'steve.jobs@tesla.com', phone: '+1-650-681-5002' },
+            { name: 'Bill Gates', email: 'bill.gates@tesla.com', phone: '+1-650-681-5003' }
+          ],
+          management: [
+            { name: 'Larry Page', position: 'CFO', email: 'larry.page@tesla.com', phone: '+1-650-681-5004' },
+            { name: 'Sergey Brin', position: 'CTO', email: 'sergey.brin@tesla.com', phone: '+1-650-681-5005' }
+          ]
+        },
+        { 
+          name: 'Intel', description: 'Semiconductors', 
+          ceo: { name: 'Pat Gelsinger', email: 'pat.gelsinger@intel.com', phone: '+1-408-765-8080' },
+          vp: { name: 'Eve Black', email: 'eve.black@intel.com', phone: '+1-408-765-8081' },
+          board: [
+            { name: 'Frank Miller', email: 'frank.miller@intel.com', phone: '+1-408-765-8082' },
+            { name: 'Grace Hopper', email: 'grace.hopper@intel.com', phone: '+1-408-765-8083' }
+          ],
+          management: [
+            { name: 'Isaac Newton', position: 'CFO', email: 'isaac.newton@intel.com', phone: '+1-408-765-8084' },
+            { name: 'Ada Lovelace', position: 'COO', email: 'ada.lovelace@intel.com', phone: '+1-408-765-8085' }
+          ]
         }
-
-        function showDetails(company) {
-            document.getElementById('companyName').textContent = company.name;
-            // Set CEO and VP information
-            document.getElementById('ceoName').textContent = company.ceo.name;
-            document.getElementById('ceoEmail').innerHTML = `<a href="mailto:${company.ceo.email}">${company.ceo.email}</a>`;
-            document.getElementById('ceoPhone').textContent = company.ceo.phone;
-            document.getElementById('vpName').textContent = company.vp.name;
-            document.getElementById('vpEmail').innerHTML = `<a href="mailto:${company.vp.email}">${company.vp.email}</a>`;
-            document.getElementById('vpPhone').textContent = company.vp.phone;
-
-            // Populate Board of Directors table
-            const bodTable = document.getElementById('bodTable');
-            // Clear previous rows except header
-            bodTable.innerHTML = `
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
-            `;
-            company.board.forEach(member => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${member.name}</td><td><a href="mailto:${member.email}">${member.email}</a></td><td>${member.phone}</td>`;
-                bodTable.appendChild(row);
-            });
-
-            // Populate Management Team table
-            const managementTable = document.getElementById('managementTable');
-            // Clear previous rows except header
-            managementTable.innerHTML = `
-                <tr>
-                    <th>Name</th>
-                    <th>Position</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
-            `;
-            company.management.forEach(manager => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${manager.name}</td><td>${manager.position}</td><td><a href="mailto:${manager.email}">${manager.email}</a></td><td>${manager.phone}</td>`;
-                managementTable.appendChild(row);
-            });
-
-            document.getElementById('companyList').style.display = 'none';
-            document.getElementById('companyDetails').style.display = 'flex';
+      ],
+      Europe: [
+        // Provide 9 European companies similarly structured
+        { 
+          name: 'Volkswagen Group', description: 'Automobiles', 
+          ceo: { name: 'Oliver Blume', email: 'oliver.blume@volkswagen.de', phone: '+49-5361-9000' },
+          vp: { name: 'Franz Müller', email: 'franz.mueller@volkswagen.de', phone: '+49-5361-9001' },
+          board: [
+            { name: 'Eva Schmidt', email: 'eva.schmidt@vw.com', phone: '+49-5361-9002' },
+            { name: 'Hans Keller', email: 'hans.keller@vw.com', phone: '+49-5361-9003' }
+          ],
+          management: [
+            { name: 'Lena Braun', position: 'CFO', email: 'lena.braun@vw.com', phone: '+49-5361-9004' },
+            { name: 'Markus Neumann', position: 'CTO', email: 'markus.neumann@vw.com', phone: '+49-5361-9005' }
+          ]
         }
-
-        function goBack() {
-            document.getElementById('companyList').style.display = 'none';
-            document.getElementById('mainContainer').style.display = 'flex';
+        // ... Add 8 more European companies
+      ],
+      Asia: [
+        { 
+          name: 'Samsung', description: 'Electronics', 
+          ceo: { name: 'Kim Hyun Suk', email: 'kim.hyun@samsung.com', phone: '+82-2-2255-0114' },
+          vp: { name: 'Lee Min Ho', email: 'lee.min@samsung.com', phone: '+82-2-2255-0115' },
+          board: [
+            { name: 'Park Ji Soo', email: 'park.jisoo@samsung.com', phone: '+82-2-2255-0116' },
+            { name: 'Choi Min Jung', email: 'choi.minjung@samsung.com', phone: '+82-2-2255-0117' }
+          ],
+          management: [
+            { name: 'Kim Soo Hyun', position: 'CFO', email: 'kim.soohy@samsung.com', phone: '+82-2-2255-0118' },
+            { name: 'Lee Young Ae', position: 'COO', email: 'lee.youngae@samsung.com', phone: '+82-2-2255-0119' }
+          ]
         }
-
-        function goBackToCompanies() {
-            document.getElementById('companyDetails').style.display = 'none';
-            document.getElementById('companyList').style.display = 'flex';
+        // ... Add 8 more Asian companies
+      ],
+      Africa: [
+        { 
+          name: 'MTN Group', description: 'Telecommunications', 
+          ceo: { name: 'Radhakrishnan Nair', email: 'radhakrishnan.nair@mtn.com', phone: '+27-11-123-4567' },
+          vp: { name: 'Ngozi Okonjo', email: 'ngozi.okonjo@mtn.com', phone: '+27-11-123-4568' },
+          board: [
+            { name: 'Sipho Dlamini', email: 'sipho.dlamini@mtn.com', phone: '+27-11-123-4569' },
+            { name: 'Amina Yusuf', email: 'amina.yusuf@mtn.com', phone: '+27-11-123-4570' }
+          ],
+          management: [
+            { name: 'Thabo Mbeki', position: 'CFO', email: 'thabo.mbeki@mtn.com', phone: '+27-11-123-4571' },
+            { name: 'Zanele Khumalo', position: 'COO', email: 'zanele.khumalo@mtn.com', phone: '+27-11-123-4572' }
+          ]
         }
+        // ... Add 8 more African companies
+      ],
+      SouthAmerica: [
+        { 
+          name: 'Petrobras', description: 'Oil & Gas', 
+          ceo: { name: 'Roberto Castello Branco', email: 'roberto.castello@petrobras.com', phone: '+55-21-2540-8000' },
+          vp: { name: 'Maria Silva', email: 'maria.silva@petrobras.com', phone: '+55-21-2540-8001' },
+          board: [
+            { name: 'Carlos Mendes', email: 'carlos.mendes@petrobras.com', phone: '+55-21-2540-8002' },
+            { name: 'Ana Costa', email: 'ana.costa@petrobras.com', phone: '+55-21-2540-8003' }
+          ],
+          management: [
+            { name: 'João Souza', position: 'CFO', email: 'joao.souza@petrobras.com', phone: '+55-21-2540-8004' },
+            { name: 'Paula Lima', position: 'COO', email: 'paula.lima@petrobras.com', phone: '+55-21-2540-8005' }
+          ]
+        }
+        // ... Add 8 more South American companies
+      ]
+    };
 
-        // Initialize main container on load
-        window.onload = () => {
-            document.getElementById('mainContainer').style.display = 'flex';
-        };
-    </script>
+    function showCompanies(continent) {
+      const companyList = document.getElementById('companyList');
+      const companiesGrid = document.getElementById('companiesGrid');
+      const selectedContinent = document.getElementById('selectedContinent');
+
+      selectedContinent.textContent = continent;
+      companiesGrid.innerHTML = '';
+
+      if (data[continent]) {
+        data[continent].forEach(company => {
+          const card = document.createElement('div');
+          card.className = 'company-card';
+          card.onclick = () => showDetails(company);
+          card.innerHTML = `
+            <h3>${company.name}</h3>
+            <p><strong>Description:</strong> ${company.description}</p>
+          `;
+          companiesGrid.appendChild(card);
+        });
+      } else {
+        companiesGrid.innerHTML = '<p>No companies found for this continent.</p>';
+      }
+
+      document.getElementById('mainContainer').style.display = 'none';
+      companyList.style.display = 'flex';
+    }
+
+    function showDetails(company) {
+      document.getElementById('companyName').textContent = company.name;
+      document.getElementById('ceoName').textContent = company.ceo.name;
+      document.getElementById('ceoEmail').innerHTML = `<a href="mailto:${company.ceo.email}">${company.ceo.email}</a>`;
+      document.getElementById('ceoPhone').textContent = company.ceo.phone;
+      document.getElementById('vpName').textContent = company.vp.name;
+      document.getElementById('vpEmail').innerHTML = `<a href="mailto:${company.vp.email}">${company.vp.email}</a>`;
+      document.getElementById('vpPhone').textContent = company.vp.phone;
+
+      const bodTable = document.getElementById('bodTable');
+      bodTable.innerHTML = `
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      `;
+      company.board.forEach(member => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${member.name}</td><td><a href="mailto:${member.email}">${member.email}</a></td><td>${member.phone}</td>`;
+        bodTable.appendChild(row);
+      });
+
+      const managementTable = document.getElementById('managementTable');
+      managementTable.innerHTML = `
+        <tr>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      `;
+      company.management.forEach(manager => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${manager.name}</td><td>${manager.position}</td><td><a href="mailto:${manager.email}">${manager.email}</a></td><td>${manager.phone}</td>`;
+        managementTable.appendChild(row);
+      });
+
+      document.getElementById('companyList').style.display = 'none';
+      document.getElementById('companyDetails').style.display = 'flex';
+    }
+
+    function goBack() {
+      document.getElementById('companyList').style.display = 'none';
+      document.getElementById('mainContainer').style.display = 'flex';
+    }
+
+    function goBackToCompanies() {
+      document.getElementById('companyDetails').style.display = 'none';
+      document.getElementById('companyList').style.display = 'flex';
+    }
+
+    window.onload = () => {
+      document.getElementById('mainContainer').style.display = 'flex';
+    };
+  </script>
 </body>
 </html>
